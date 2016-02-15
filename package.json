@@ -1,0 +1,35 @@
+{
+  "name": "fadt",
+  "version": "1.0.0",
+  "description": "Abstract data type library using ES5 classes",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/eslint/bin/eslint.js src && mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edhille/fadt.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Functional",
+    "Data-type"
+  ],
+  "author": "Ted Hille",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edhille/fadt/issues"
+  },
+  "homepage": "https://github.com/edhille/fadt",
+  "dependencies": {
+    "lodash": "^4.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.1.0",
+    "mocha": "^2.4.5"
+  }
+}
