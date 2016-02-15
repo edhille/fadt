@@ -1,1 +1,1 @@
-module.exports = require('src/adt.js');
+module.exports = require('./src/adt');
