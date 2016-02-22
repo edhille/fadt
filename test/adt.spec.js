@@ -1,4 +1,3 @@
-/* jshint expr: true */
 /* globals describe: true, beforeEach: true, afterEach: true, it: true */
 'use strict';
 
@@ -19,6 +18,7 @@ describe('Abstract Data Type', function () {
 
 		ADT.call(this);
 	}
+
 	ADT.inherit(Child, ADT);
 
 	function GrandChild(params) {
@@ -26,6 +26,7 @@ describe('Abstract Data Type', function () {
 
 		Child.call(this, params);
 	}
+
 	Child.inherit(GrandChild, Child);
 
 	describe('freezing objects', function () {
@@ -112,17 +113,16 @@ describe('Abstract Data Type', function () {
 			done();
 		});
 
-		it.skip('should not get stuck on objects with cycles', function (done) {
+		it('should not get stuck on objects with cycles', function (done) {
 			var objA = new Child({});
-			var objB = new Child({ objProp: objA });
 
-			expect(1).to.be.ok(); // should just complete
+			expect((new Child({ objProp: objA }))).to.be.instanceOf(Child);
 
 			done();
 		});
 	});
 
-	describe.skip('illegal instances', function () {
+	describe('illegal instances', function () {
 
 		it('should not let you create an instance that has a function property', function (done) {
 			expect(function () { new Child({ illegal: function () {} }); }).to.throw();

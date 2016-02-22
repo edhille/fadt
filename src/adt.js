@@ -29,6 +29,11 @@ function makeCloneable(obj) {
 }
 
 function ADT() {
+	Object.keys(this).forEach(function _ensureNoFunctionProp(prop) {
+		/* istanbul ignore else */
+		if (typeof this[prop] === 'function') throw new TypeError('Cannot create ADT-based object with a function as a property');
+	}.bind(this));
+
 	/* istanbul ignore else */
 	if (Object.freeze) Object.freeze(this);
 }
