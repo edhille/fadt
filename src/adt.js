@@ -1,6 +1,6 @@
 'use strict';
 
-var merge = require('lodash/assignWith');
+var merge = require('lodash.assignwith');
 
 function inherit(subClass, superClass) {
 	if (typeof superClass !== 'function' && superClass !== null) {
