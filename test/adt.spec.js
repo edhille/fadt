@@ -1,33 +1,26 @@
-/* globals describe: true, beforeEach: true, afterEach: true, it: true */
+/* globals describe: true, before: true, beforeEach: true, afterEach: true, it: true */
 'use strict';
 
 var chai = require('chai');
 var expect = chai.expect;
 
-var ADT = require('../src/adt');
+var createDataType = require('../src/adt');
 
 describe('Abstract Data Type', function () {
+	var Child, GrandChild;
 
-	// Set up some classes for our testing
-	function Child(params) {
-		var self = this;
-
-		Object.keys(params).map(function (prop) {
-			self[prop] = params[prop];
+	before(function (done) {
+		Child = createDataType(function (params) {
+			this.simpleProp = params.simpleProp;
+			this.objProp = params.objProp;
+			this.arrProp = params.arrProp;
 		});
 
-		ADT.call(this);
-	}
-
-	ADT.inherit(Child, ADT);
-
-	function GrandChild(params) {
-		params.added = 'value';
-
-		Child.call(this, params);
-	}
-
-	Child.inherit(GrandChild, Child);
+		GrandChild = createDataType(function (/* params */) {
+			this.added = 'value';
+		}, Child);
+		done();
+	});
 
 	describe('freezing objects', function () {
 		var child;
@@ -51,13 +44,6 @@ describe('Abstract Data Type', function () {
 			params = null;
 			child = null;
 			grandChild = null;
-
-			done();
-		});
-
-		it('is an ADT', function (done) {
-			expect(child).to.be.instanceof(ADT);
-			expect(grandChild).to.be.instanceof(ADT);
 
 			done();
 		});
@@ -122,15 +108,6 @@ describe('Abstract Data Type', function () {
 		});
 	});
 
-	describe('illegal instances', function () {
-
-		it('should not let you create an instance that has a function property', function (done) {
-			expect(function () { new Child({ illegal: function () {} }); }).to.throw();
-
-			done();
-		});
-	});
-
 	describe('cloning instances', function () {
 
 		describe('no changes', function () {
@@ -160,10 +137,12 @@ describe('Abstract Data Type', function () {
 		describe('with simple property changes', function () {
 			var origInstance;
 			var clonedInstance;
+			var testArrProp;
 
 			beforeEach(function (done) {
-				origInstance = new Child({ original: 'value', another: 'thing' });
-				clonedInstance = origInstance.next({ original: 'changed' });
+				testArrProp = ['thing'];
+				origInstance = new Child({ simpleProp: 'value', arrProp: testArrProp });
+				clonedInstance = origInstance.next({ simpleProp: 'changed' });
 
 				done();
 			});
@@ -181,13 +160,13 @@ describe('Abstract Data Type', function () {
 			});
 
 			it('should have changed value in cloned instance', function (done) {
-				expect(clonedInstance.original).to.equal('changed');
+				expect(clonedInstance.simpleProp).to.equal('changed');
 
 				done();
 			});
 
 			it('should have property that was not modified', function (done) {
-				expect(clonedInstance.another).to.equal('thing');
+				expect(clonedInstance.arrProp).to.equal(testArrProp);
 
 				done();
 			});
@@ -198,8 +177,8 @@ describe('Abstract Data Type', function () {
 			var clonedInstance;
 
 			beforeEach(function (done) {
-				origInstance = new Child({ original: ['value'], another: 'thing' });
-				clonedInstance = origInstance.next({ original: ['changed'] });
+				origInstance = new Child({ arrProp: ['value'], simpleProp: 'thing' });
+				clonedInstance = origInstance.next({ arrProp: ['changed'] });
 
 				done();
 			});
@@ -217,24 +196,16 @@ describe('Abstract Data Type', function () {
 			});
 
 			it('should have changed value in cloned instance', function (done) {
-				expect(clonedInstance.original).not.to.have.same.members(origInstance.original);
+				expect(clonedInstance.arrProp).not.to.have.same.members(origInstance.arrProp);
 
 				done();
 			});
 
 			it('should have property that was not modified', function (done) {
-				expect(clonedInstance.another).to.equal('thing');
+				expect(clonedInstance.simpleProp).to.equal('thing');
 
 				done();
 			});
-		});
-	});
-
-	describe('inherit helper', function () {
-
-		it('should throw error trying to inherit from non-function', function (done) {
-			expect(function () { ADT.inherit(GrandChild, {}); }).to.throw();
-			done();
 		});
 	});
 });
