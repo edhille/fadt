@@ -1,4 +1,4 @@
-zR
+{
   "name": "fadt",
   "version": "2.0.0",
   "description": "Abstract data type library using ES5 classes",
