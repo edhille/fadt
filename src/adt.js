@@ -60,7 +60,6 @@ function createDataType(ctr, ParentClass) {
 	var _constructor = function _constructor(params) {
 		params = params || {};
 
-		/* istanbul ignore else */
 		if (ParentClass) {
 			ParentClass.__childCall__ = true;
 			ParentClass.call(this, params);
@@ -69,7 +68,6 @@ function createDataType(ctr, ParentClass) {
 		
 		ctr.call(this, params);
 
-		/* istanbul ignore else */
 		if (!_constructor.__childCall__ && Object.freeze) Object.freeze(this);
 	};
 

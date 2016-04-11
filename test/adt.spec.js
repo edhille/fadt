@@ -134,6 +134,30 @@ describe('Abstract Data Type', function () {
 			});
 		});
 
+		describe('empty changes', function () {
+			var origInstance;
+			var clonedInstance;
+
+			beforeEach(function (done) {
+				origInstance = new GrandChild({ original: 'value', another: 'thing' });
+				clonedInstance = origInstance.next({});
+
+				done();
+			});
+
+			afterEach(function (done) {
+				origInstance = clonedInstance = null;
+
+				done();
+			});
+
+			it('should have original instance equaling cloned instance', function (done) {
+				expect(origInstance).to.equal(clonedInstance);
+
+				done();
+			});
+		});
+
 		describe('with simple property changes', function () {
 			var origInstance;
 			var clonedInstance;
@@ -206,6 +230,57 @@ describe('Abstract Data Type', function () {
 
 				done();
 			});
+		});
+
+		describe('using #copy', function () {
+			var orig;
+			var copy;
+
+			beforeEach(function (done) {
+				orig= new GrandChild({ original: 'value', another: 'thing' });
+				copy = orig.copy();
+
+				done();
+			});
+
+			afterEach(function (done) {
+				orig = copy = null;
+
+				done();
+			});
+
+			it('should have original instance that is not equal to cloned instance', function (done) {
+				expect(orig).not.to.equal(copy);
+
+				done();
+			});
+
+		});
+	});
+
+	describe('creating with no properties', function () {
+		var instance;
+
+		beforeEach(function (done) {
+			instance = new Child();
+			done();
+		});
+
+		it('should be able to create an instance', function (done) {
+			expect(instance).to.be.instanceof(Child);
+			done();
+		});
+	});
+
+	describe('subclassing', function () {
+
+		it('should throw error if superclass is not a function', function (done) {
+			expect(function () {
+				createDataType(function (/* params */) {
+					this.shouldFail = true;
+				}, 'FAIL!');
+			}).to.throw(TypeError);
+			done();
 		});
 	});
 });
