@@ -1,6 +1,6 @@
 {
   "name": "fadt",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Abstract data type library using ES5 classes",
   "main": "index.js",
   "directories": {
