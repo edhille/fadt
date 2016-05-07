@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "preinstall": "if test ! -h ./.git/hooks/commit-msg; then ln -s ./scripts/commit-msg ./.git/hooks/commit-msg; fi;",
+    "preinstall": "if test -d ./.git && test ! -h ./.git/hooks/commit-msg; then ln -s ./scripts/commit-msg ./.git/hooks/commit-msg; fi;",
     "lint": "./node_modules/eslint/bin/eslint.js src",
     "clean": "rm -Rf ./coverage",
     "local-coverage": "npm run clean && ./node_modules/istanbul/lib/cli.js cover _mocha test/**.spec.js",
