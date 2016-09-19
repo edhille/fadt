@@ -4,7 +4,7 @@ Functional Abstract Data-types
 
 [![Build Status](https://travis-ci.org/edhille/fadt.svg?branch=master)](https://travis-ci.org/edhille/fadt)
 [![Coverage Status](https://coveralls.io/repos/github/edhille/fadt/badge.svg?branch=master)](https://coveralls.io/github/edhille/fadt?branch=master)
-[![Dependencies](https://david-dm.org/edhille/fadt.svg)](https://david-dm.org/edhille/fadt.svg)
+[![Dependencies](https://david-dm.org/edhille/fadt.svg)](https://david-dm.org/edhille/fadt)
 
 This is a simple library for definining immutable data-only classes, no
 methods allowed. It also provides a "copy" method to create a modified copy of
