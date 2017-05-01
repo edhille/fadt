@@ -18,8 +18,8 @@ function inherit(subClass, superClass) {
 	
 	subClass.prototype = Object.create(
 		superClass && superClass.prototype, 
-		{ constructor: { value: subClass, enumerable: false, writable: true, configurable: true  }
-	});
+		{ constructor: { value: subClass, enumerable: false, writable: true, configurable: true  } }
+	);
 	
 	/* istanbul ignore else */
 	if (superClass) subClass.__proto__ = superClass;

@@ -15,10 +15,11 @@ an instance with the provided changes applied.
 ### Step One: Define your data-types
 
 ```javascript
-import { createDataType, existy } from 'fadt';
+const createDataType = require('fadt');
+const isUndefined = require('lodash.isundefined');
 
 const MyBaseDataType = createDataType(function (params) {
-	if (!existy(params.fooCount)) throw new TypeError('"fooCount" is required');
+	if (!isUndefinedl(params.fooCount)) throw new TypeError('"fooCount" is required');
 	
 	this.fooCount = params.fooCount;
 	this.isBar = params.isBar || false;
@@ -26,7 +27,7 @@ const MyBaseDataType = createDataType(function (params) {
 });
 
 const MyChildDataType = createDataType(function (params) {
-	if (!existy(params.subObject)) throw new TypeError('"subObject" is required');
+	if (!isUndefined(params.subObject)) throw new TypeError('"subObject" is required');
 
 	this.subObject = params.subObject;
 	this.children = params.children || [];
@@ -66,8 +67,8 @@ try {
 ### ADT~createDataType(ctr, [ParentClass]) ⇒ <code>function</code>
 Generate Abstract Data Type constructor
 
-**Kind**: inner method of <code>[ADT](#module_ADT)</code>  
-**Returns**: <code>function</code> - Constructor  
+**Kind**: inner method of <code>[ADT](#module_ADT)</code>
+**Returns**: <code>function</code> - Constructor
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -76,7 +77,7 @@ Generate Abstract Data Type constructor
 
 <a name="module_ADT..Constructor"></a>
 ### ADT~Constructor : <code>function</code>
-**Kind**: inner typedef of <code>[ADT](#module_ADT)</code>  
+**Kind**: inner typedef of <code>[ADT](#module_ADT)</code>
 **Throws**:
 
 - <code>TypeError</code> error thrown for any type validation
@@ -90,8 +91,7 @@ Generate Abstract Data Type constructor
 
 ## FAQ
 
-### Why are you using stinky, old ES5 class syntax? Get with the program and
-use the shiny, new ES2015 class syntax!
+### Why are you using stinky, old ES5 class syntax? Get with the program and use the shiny, new ES2015 class syntax!
 
 The astute reader will indeed notice that this library is using ES5 class
 syntax. The reason for this is that the base constructor needs to fire last,
